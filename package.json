@@ -1,0 +1,21 @@
+{
+  "name": "googlecharttest",
+  "version": "1.0.0",
+  "description": "My smashing Nuxt.js project",
+  "author": "Deepjyoti Paul",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.0.0",
+    "google-charts": "^2.0.0",
+    "nuxt": "^1.0.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.1"
+  }
+}
