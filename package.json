@@ -13,7 +13,8 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
     "google-charts": "^2.0.0",
-    "nuxt": "^1.0.0"
+    "nuxt": "^1.0.0",
+    "vue-google-charts": "^0.3.2"
   },
   "devDependencies": {
     "cross-env": "^5.0.1"

@@ -1,41 +1,57 @@
 <template>
   <div>
-    <div id="chart1" style="width:100%;height:500px"></div>
+    <div id="chart1" style="width:100%;height:500px">
+      <GChart
+        :settings="{packages:['bar']}"
+        :data="chartData"
+        :options="chartOptions"
+        :createChart="(el, google) => new google.charts.Bar(el)"
+        @ready="onChartReady"
+       />
+    </div>
   </div>
 </template>
 
 <script>
-import {GoogleCharts} from 'google-charts';
+import {GChart} from 'vue-google-charts';
 export default {
   data(){
     return{
-      info:[]
+      info:[],
+      chartData:[]
     }
   },
+  components:{
+    GChart
+  },
   mounted(){
-    GoogleCharts.load(this.drawChart,{
-      'packages': ['corechart']
-    });
+    this.drawChart()
   },
   methods:{
     drawChart(){
       this.$axios.get("http://localhost:5000").then(response=>{
-        this.info=response.data
-        const data = GoogleCharts.api.visualization.arrayToDataTable(response.data);
-        const pie_1_chart = new GoogleCharts.api.visualization.LineChart(document.getElementById('chart1'));
-        const pie_1_options = {
-          chart: {
-            title: 'Box Office Earnings in First Two Weeks of Opening',
-            subtitle: 'in millions of dollars (USD)'
-          },
-          width: 900,
-          height: 500
-        };
-        pie_1_chart.draw(data,pie_1_options);
+        this.chartData=response.data
       })
-      
+    },
+    onChartReady (chart, google) {
+      this.chartsLib = google
     }
-  }
+  },
+  computed: {
+    chartOptions () {
+      if (!this.chartsLib) return null
+      return this.chartsLib.charts.Bar.convertOptions({
+        chart: {
+          title: 'Company Performance',
+          subtitle: 'Sales, Expenses, and Profit: 2014-2017'
+        },
+        bars: 'horizontal', // Required for Material Bar Charts.
+        hAxis: { format: 'decimal' },
+        height: 400,
+        colors: ['#1b9e77', '#d95f02', '#7570b3']
+      })
+    }
+  },
 }
 </script>
 
